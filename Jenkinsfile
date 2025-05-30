@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'sharan-sant/iot-hvac'
-        DOCKER_CREDENTIALS_ID = 'jenkins'  // 👈 This should match Jenkins DockerHub creds ID
+        DOCKER_CREDENTIALS_ID = 'jenkins'
     }
 
     stages {
@@ -16,8 +16,17 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
-                sh 'docker build -t $IMAGE_NAME .'
+                echo "Injecting MQTT credentials..."
+                withCredentials([
+                    file(credentialsId: 'MQTT_KEY', variable: 'MQTT_KEY_PATH'),
+                    file(credentialsId: 'MQTT_CRT', variable: 'MQTT_CRT_PATH')
+                ]) {
+                    sh '''
+                        cp "$MQTT_KEY_PATH" ./mqtt.key
+                        cp "$MQTT_CRT_PATH" ./mqtt.crt
+                        docker build -t $IMAGE_NAME .
+                    '''
+                }
             }
         }
 
