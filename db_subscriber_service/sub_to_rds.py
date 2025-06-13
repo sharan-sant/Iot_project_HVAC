@@ -2,14 +2,16 @@ import paho.mqtt.client as mqtt
 import ssl
 import psycopg2
 import json
+import os
 
 # 🔐 PostgreSQL RDS config
 db_conn = psycopg2.connect(
-    host="iot-database.c10s2mo025fv.eu-north-1.rds.amazonaws.com",
-    port=5432,
-    database="postgres",
-    user="postgres",
-    password="g7[Eq~<Ai>*3wt7#~uZ5SDI:2]v2"  # 🛑 Use your actual password
+    host=os.environ.get("DB_HOST", "iot-database.c10s2mo025fv.eu-north-1.rds.amazonaws.com"),
+    port=int(os.environ.get("DB_PORT", 5432)),
+    database=os.environ.get("DB_NAME", "postgres"),
+    user=os.environ.get("DB_USER", "postgres"),
+    # The database password must be provided via the DB_PASSWORD environment variable
+    password=os.environ["DB_PASSWORD"]
 )
 
 cursor = db_conn.cursor()
