@@ -6,7 +6,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY publisher/pub.py pub.py
-COPY mqtt.crt .
-COPY mqtt.key .
+COPY mqtt-ec2.pem .
 
 CMD ["python", "pub.py"]

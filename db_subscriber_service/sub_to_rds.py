@@ -41,7 +41,7 @@ def on_message(client, userdata, msg):
 # 🔧 MQTT TLS Secure Connection
 client = mqtt.Client()
 client.tls_set(
-    ca_certs="mqtt.crt",
+    ca_certs="mqtt-ec2.pem",
     cert_reqs=ssl.CERT_REQUIRED,
     tls_version=ssl.PROTOCOL_TLS,
 )
