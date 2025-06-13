@@ -5,7 +5,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY db_subscriber_service/sub_to_rds.py ./sub_to_rds.py
-COPY mqtt.crt .
-COPY mqtt.key .
+COPY mqtt-ec2.pem .
 
 CMD ["python", "sub_to_rds.py"]

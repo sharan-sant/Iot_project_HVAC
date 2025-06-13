@@ -10,7 +10,7 @@ port = 443
 topic = "iot/sensors"
 
 # TLS certificate path
-ca_cert_path = "mqtt.crt"  # Local path to mqtt.crt (same file you copied)
+ca_cert_path = "mqtt-ec2.pem"  # Use the bundled certificate provided with the repo
 
 # Create client
 client = mqtt.Client(client_id="mqtt_simulator1")
